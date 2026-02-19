@@ -11,34 +11,43 @@ function applyColors() {
 }
 
 function parseContent(text) {
-  const lines = text.split("\n");
+  // Normalize line breaks
+  const raw = text.replace(/\r/g, "").trim();
+  const lines = raw.split("\n");
+
   const title = lines[0] || "Your Title";
   const subtitle = lines[1] || "Your subtitle here";
 
-  let overview = "";
+  // Everything after first 2 lines
+  const body = lines.slice(2).join("\n").trim();
+
+  let overviewParas = [];
   let features = [];
+
   let inFeatures = false;
 
-  for (let i = 2; i < lines.length; i++) {
-    const line = lines[i].trim();
+  body.split("\n").forEach(line => {
+    const l = line.trim();
 
-    if (line.toLowerCase().includes("feature")) {
+    if (!l) return; // skip empty lines
+
+    if (l.toLowerCase().includes("feature")) {
       inFeatures = true;
-      continue;
+      return;
     }
 
-    if (inFeatures && line.startsWith("-")) {
-      features.push(line.replace("-", "").trim());
-    } else {
-      overview += line + " ";
+    if (inFeatures && (l.startsWith("-") || l.startsWith("•"))) {
+      features.push(l.replace(/^[-•]\s*/, "").trim());
+    } else if (!inFeatures) {
+      overviewParas.push(l);
     }
-  }
+  });
 
   if (features.length === 0) {
     features = ["Feature One", "Feature Two", "Feature Three", "Feature Four"];
   }
 
-  return { title, subtitle, overview, features };
+  return { title, subtitle, overviewParas, features };
 }
 
 function randomLayout() {
@@ -47,9 +56,10 @@ function randomLayout() {
 }
 
 function render(layout, data) {
-  const { title, subtitle, overview, features } = data;
+  const { title, subtitle, overviewParas, features } = data;
 
-  let featuresHtml = features.map(f => `<div class="box">${f}</div>`).join("");
+  const overviewHtml = overviewParas.map(p => `<p>${p}</p>`).join("");
+  const featuresHtml = features.map(f => `<div class="box">${f}</div>`).join("");
 
   let html = "";
 
@@ -62,7 +72,7 @@ function render(layout, data) {
         </div>
         <div class="section content">
           <h3>Overview</h3>
-          <p>${overview}</p>
+          ${overviewHtml}
           <div class="features">
             ${featuresHtml}
           </div>
@@ -80,7 +90,7 @@ function render(layout, data) {
           <p>${subtitle}</p>
         </div>
         <div class="section content">
-          ${overview}
+          ${overviewHtml}
         </div>
         <div class="section features">
           ${featuresHtml}
@@ -100,7 +110,7 @@ function render(layout, data) {
         <div class="split">
           <div class="left">
             <h3>Overview</h3>
-            <p>${overview}</p>
+            ${overviewHtml}
           </div>
           <div class="right">
             <h3>Features</h3>
