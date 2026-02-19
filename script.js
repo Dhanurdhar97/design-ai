@@ -26,6 +26,7 @@ function parseContent(text) {
       inFeatures = true;
       continue;
     }
+
     if (inFeatures && line.startsWith("-")) {
       features.push(line.replace("-", "").trim());
     } else {
