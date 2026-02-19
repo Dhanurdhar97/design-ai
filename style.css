@@ -4,139 +4,102 @@
   --accent: #00B3A4;
 }
 
+* { box-sizing: border-box; }
+
 body {
   font-family: Arial, sans-serif;
   background: #eef2f7;
   padding: 20px;
 }
 
-.form {
-  background: white;
-  padding: 20px;
-  max-width: 900px;
-  margin: 0 auto 20px auto;
-  border-radius: 6px;
+/* ===== Gallery ===== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 40px auto;
 }
 
-.form textarea {
-  width: 100%;
-  height: 180px;
+.template-card {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.template-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* ===== Editor ===== */
+.toolbar {
+  background: white;
   padding: 10px;
   margin-bottom: 10px;
-}
-
-.colors {
   display: flex;
-  gap: 20px;
-  margin-bottom: 10px;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-button {
-  padding: 10px 16px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.page {
-  max-width: 1000px;
+.canvas {
+  max-width: 900px;
   margin: auto;
   background: white;
-  line-height: 1.6;
+  padding: 0;
 }
 
-/* Common */
-.header {
-  padding: 40px 30px;
+/* Editable text */
+[contenteditable="true"] {
+  outline: 1px dashed #cfd6df;
+  padding: 4px;
 }
 
-.section {
-  padding: 30px;
-}
+/* Common blocks */
+.header { padding: 36px 28px; }
+.section { padding: 28px; }
+.footer { padding: 14px; text-align: center; }
 
-.footer {
-  text-align: center;
-  padding: 14px;
-}
+/* ===== Template Skins ===== */
 
-/* ===== Layout A: Corporate ===== */
-.layout-a .header {
-  background: var(--primary);
-  color: white;
-}
-.layout-a .footer {
-  background: var(--primary);
-  color: white;
-}
+/* 1) Corporate */
+.corporate .header, .corporate .footer { background: var(--primary); color: #fff; }
+.corporate .features { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.box { border:1px solid #d6dbe3; padding:12px; border-radius:6px; }
 
-.layout-a .content {
-  max-width: 800px;
-  margin: auto;
-}
+/* 2) Split */
+.split .header, .split .footer { background: var(--secondary); color:#fff; }
+.split .content { display:grid; grid-template-columns: 2fr 1fr; gap:20px; }
 
-.layout-a .features {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 20px;
-}
+/* 3) Minimal */
+.minimal .header { border-bottom:4px solid var(--primary); }
+.minimal .footer { border-top:4px solid var(--primary); }
 
-.layout-a .box {
-  border: 1px solid #ccc;
-  padding: 15px;
-}
+/* 4) Hero + Cards */
+.hero-cards .hero { background: linear-gradient(135deg, var(--primary), var(--secondary)); color:#fff; padding:48px 32px; }
+.hero-cards .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 
-/* ===== Layout B: Editorial (2-column text) ===== */
-.layout-b .header {
-  background: var(--secondary);
-  color: white;
-}
-.layout-b .footer {
-  background: var(--secondary);
-  color: white;
-}
+/* 5) Editorial */
+.editorial .columns { column-count:2; column-gap:36px; }
 
-.layout-b .content {
-  max-width: 1000px;
-  margin: auto;
-  column-count: 2;
-  column-gap: 40px;
-}
+/* 6) Grid */
+.grid .grid-wrap { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 
-.layout-b .features {
-  max-width: 1000px;
-  margin: 30px auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
+/* 7) Product */
+.product .product-wrap { display:grid; grid-template-columns:1.2fr .8fr; gap:20px; }
 
-/* ===== Layout C: Split Panel ===== */
-.layout-c .header {
-  background: var(--accent);
-  color: white;
-}
-.layout-c .footer {
-  background: var(--accent);
-  color: white;
-}
+/* 8) Brief */
+.brief .summary { background:#f5f7fb; border-left:4px solid var(--accent); padding:20px; }
 
-.layout-c .split {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-}
+/* 9) Dark */
+.dark { background:#0e1320; color:#e9ecf1; }
+.dark .header, .dark .footer { background:#0b0f1a; }
+.dark .box { border-color:#2a3350; }
 
-.layout-c .left {
-  padding: 30px;
-}
-
-.layout-c .right {
-  padding: 30px;
-  background: #f5f7fa;
-}
-
-.layout-c .box {
-  border: 1px solid #ccc;
-  padding: 12px;
-  margin-bottom: 10px;
-}
+/* 10) Startup */
+.startup .header { background: var(--accent); color:#001015; }
+.startup h1 { font-size: 42px; }
+.startup .callouts { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
