@@ -1,4 +1,7 @@
-let lastData = null;
+function getTemplate() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("template") || "corporate";
+}
 
 function applyColors() {
   const p = document.getElementById("primaryColor").value;
@@ -10,176 +13,202 @@ function applyColors() {
   document.documentElement.style.setProperty("--accent", a);
 }
 
-// Simple summarizer: keep first 2 sentences
-function summarize(text, maxSentences = 2) {
-  const sentences = text.split(/(?<=[.!?])\s+/);
-  return sentences.slice(0, maxSentences).join(" ");
-}
+document.addEventListener("input", (e) => {
+  if (e.target && e.target.type === "color") applyColors();
+});
 
-// Detect sections by keywords
-function parseContent(text) {
-  const raw = text.replace(/\r/g, "").trim();
-  const lines = raw.split("\n").map(l => l.trim()).filter(Boolean);
-
-  const title = lines[0] || "Your Title";
-  const subtitle = lines[1] || "Your subtitle here";
-
-  const bodyLines = lines.slice(2);
-
-  let sections = {
-    overview: [],
-    benefits: [],
-    features: [],
-    others: []
-  };
-
-  let current = "overview";
-
-  bodyLines.forEach(line => {
-    const l = line.toLowerCase();
-
-    if (l.includes("overview")) current = "overview";
-    else if (l.includes("benefit")) current = "benefits";
-    else if (l.includes("feature")) current = "features";
-    else if (l.includes("impact") || l.includes("use case")) current = "others";
-
-    if (line.startsWith("-") || line.startsWith("•")) {
-      sections.features.push(line.replace(/^[-•]\s*/, ""));
-    } else {
-      sections[current].push(line);
-    }
-  });
-
-  // Summarize long sections
-  const overviewText = summarize(sections.overview.join(" "), 3) || "Overview will appear here.";
-  const benefitsText = summarize(sections.benefits.join(" "), 3);
-  const othersText = summarize(sections.others.join(" "), 3);
-
-  let features = sections.features;
-  if (features.length === 0) {
-    features = ["Feature One", "Feature Two", "Feature Three", "Feature Four"];
-  }
-
-  return {
-    title,
-    subtitle,
-    overview: overviewText,
-    benefits: benefitsText,
-    others: othersText,
-    features
-  };
-}
-
-function randomLayout() {
-  const layouts = ["a", "b", "c"];
-  return layouts[Math.floor(Math.random() * layouts.length)];
-}
-
-function render(layout, data) {
-  const { title, subtitle, overview, benefits, others, features } = data;
-
-  const featuresHtml = features.map(f => `<div class="box">${f}</div>`).join("");
-
-  let extraSections = "";
-  if (benefits) extraSections += `<h3>Benefits</h3><p>${benefits}</p>`;
-  if (others) extraSections += `<h3>Additional</h3><p>${others}</p>`;
-
+function loadTemplate() {
+  const t = getTemplate();
+  const canvas = document.getElementById("canvas");
   let html = "";
 
-  if (layout === "a") {
+  if (t === "corporate") {
     html = `
-      <div class="page layout-a" id="pdfContent">
-        <div class="header">
-          <h1>${title}</h1>
-          <p>${subtitle}</p>
-        </div>
-        <div class="section content">
-          <h3>Overview</h3>
-          <p>${overview}</p>
-          ${extraSections}
-          <div class="features">
-            ${featuresHtml}
-          </div>
-        </div>
-        <div class="footer">nFolks Data Solutions LLC</div>
+    <div class="corporate">
+      <div class="header">
+        <h1 contenteditable="true">Your Title</h1>
+        <p contenteditable="true">Your subtitle goes here</p>
       </div>
-    `;
+      <div class="section">
+        <h3 contenteditable="true">Overview</h3>
+        <p contenteditable="true">Paste your overview text here...</p>
+        <div class="features">
+          <div class="box" contenteditable="true">Feature one</div>
+          <div class="box" contenteditable="true">Feature two</div>
+          <div class="box" contenteditable="true">Feature three</div>
+          <div class="box" contenteditable="true">Feature four</div>
+        </div>
+      </div>
+      <div class="footer" contenteditable="true">Your Company Name</div>
+    </div>`;
   }
 
-  if (layout === "b") {
+  if (t === "split") {
     html = `
-      <div class="page layout-b" id="pdfContent">
-        <div class="header">
-          <h1>${title}</h1>
-          <p>${subtitle}</p>
-        </div>
-        <div class="section content">
-          <h3>Overview</h3>
-          <p>${overview}</p>
-          ${extraSections}
-        </div>
-        <div class="section features">
-          ${featuresHtml}
-        </div>
-        <div class="footer">nFolks Data Solutions LLC</div>
+    <div class="split">
+      <div class="header">
+        <h1 contenteditable="true">Your Title</h1>
+        <p contenteditable="true">Subtitle here</p>
       </div>
-    `;
+      <div class="section content">
+        <div>
+          <h3 contenteditable="true">Overview</h3>
+          <p contenteditable="true">Main content...</p>
+        </div>
+        <div>
+          <h3 contenteditable="true">Features</h3>
+          <div class="box" contenteditable="true">Feature one</div>
+          <div class="box" contenteditable="true">Feature two</div>
+          <div class="box" contenteditable="true">Feature three</div>
+        </div>
+      </div>
+      <div class="footer" contenteditable="true">Your Company</div>
+    </div>`;
   }
 
-  if (layout === "c") {
+  if (t === "minimal") {
     html = `
-      <div class="page layout-c" id="pdfContent">
-        <div class="header">
-          <h1>${title}</h1>
-          <p>${subtitle}</p>
-        </div>
-        <div class="split">
-          <div class="left">
-            <h3>Overview</h3>
-            <p>${overview}</p>
-            ${extraSections}
-          </div>
-          <div class="right">
-            <h3>Features</h3>
-            ${featuresHtml}
-          </div>
-        </div>
-        <div class="footer">nFolks Data Solutions LLC</div>
+    <div class="minimal">
+      <div class="header">
+        <h1 contenteditable="true">Your Title</h1>
+        <p contenteditable="true">Subtitle</p>
       </div>
-    `;
+      <div class="section">
+        <p contenteditable="true">Paste your content here...</p>
+      </div>
+      <div class="footer" contenteditable="true">Your Company</div>
+    </div>`;
   }
 
-  document.getElementById("output").innerHTML = html;
+  if (t === "hero-cards") {
+    html = `
+    <div class="hero-cards">
+      <div class="hero">
+        <h1 contenteditable="true">Big Hero Title</h1>
+        <p contenteditable="true">Hero subtitle text</p>
+      </div>
+      <div class="section cards">
+        <div class="box" contenteditable="true">Card one</div>
+        <div class="box" contenteditable="true">Card two</div>
+        <div class="box" contenteditable="true">Card three</div>
+      </div>
+      <div class="footer" contenteditable="true">Your Brand</div>
+    </div>`;
+  }
+
+  if (t === "editorial") {
+    html = `
+    <div class="editorial">
+      <div class="header">
+        <h1 contenteditable="true">Editorial Title</h1>
+        <p contenteditable="true">Subtitle</p>
+      </div>
+      <div class="section columns">
+        <p contenteditable="true">Column text 1...</p>
+        <p contenteditable="true">Column text 2...</p>
+      </div>
+      <div class="footer" contenteditable="true">Your Brand</div>
+    </div>`;
+  }
+
+  if (t === "grid") {
+    html = `
+    <div class="grid">
+      <div class="header">
+        <h1 contenteditable="true">Grid Layout</h1>
+        <p contenteditable="true">Subtitle</p>
+      </div>
+      <div class="section grid-wrap">
+        <div class="box" contenteditable="true">Block 1</div>
+        <div class="box" contenteditable="true">Block 2</div>
+        <div class="box" contenteditable="true">Block 3</div>
+        <div class="box" contenteditable="true">Block 4</div>
+        <div class="box" contenteditable="true">Block 5</div>
+        <div class="box" contenteditable="true">Block 6</div>
+      </div>
+      <div class="footer" contenteditable="true">Your Brand</div>
+    </div>`;
+  }
+
+  if (t === "product") {
+    html = `
+    <div class="product">
+      <div class="header">
+        <h1 contenteditable="true">Product Name</h1>
+        <p contenteditable="true">Short tagline</p>
+      </div>
+      <div class="section product-wrap">
+        <div>
+          <p contenteditable="true">Product description...</p>
+        </div>
+        <div>
+          <div class="box" contenteditable="true">Benefit 1</div>
+          <div class="box" contenteditable="true">Benefit 2</div>
+          <div class="box" contenteditable="true">Benefit 3</div>
+        </div>
+      </div>
+      <div class="footer" contenteditable="true">Your Brand</div>
+    </div>`;
+  }
+
+  if (t === "brief") {
+    html = `
+    <div class="brief">
+      <div class="header">
+        <h1 contenteditable="true">Executive Brief</h1>
+        <p contenteditable="true">Subtitle</p>
+      </div>
+      <div class="section summary">
+        <p contenteditable="true">Key summary points...</p>
+      </div>
+      <div class="section">
+        <p contenteditable="true">Details go here...</p>
+      </div>
+      <div class="footer" contenteditable="true">Your Brand</div>
+    </div>`;
+  }
+
+  if (t === "dark") {
+    html = `
+    <div class="dark">
+      <div class="header">
+        <h1 contenteditable="true">Dark Premium</h1>
+        <p contenteditable="true">Bold subtitle</p>
+      </div>
+      <div class="section">
+        <div class="box" contenteditable="true">Highlight 1</div>
+        <div class="box" contenteditable="true">Highlight 2</div>
+        <div class="box" contenteditable="true">Highlight 3</div>
+      </div>
+      <div class="footer" contenteditable="true">Your Brand</div>
+    </div>`;
+  }
+
+  if (t === "startup") {
+    html = `
+    <div class="startup">
+      <div class="header">
+        <h1 contenteditable="true">Startup Title</h1>
+        <p contenteditable="true">Build fast. Ship faster.</p>
+      </div>
+      <div class="section callouts">
+        <div class="box" contenteditable="true">Fast</div>
+        <div class="box" contenteditable="true">Secure</div>
+        <div class="box" contenteditable="true">Scalable</div>
+        <div class="box" contenteditable="true">Modern</div>
+      </div>
+      <div class="footer" contenteditable="true">Your Brand</div>
+    </div>`;
+  }
+
+  canvas.innerHTML = html;
 }
 
-function generate() {
-  applyColors();
-  const text = document.getElementById("rawContent").value;
-  const data = parseContent(text);
-  lastData = data;
-
-  const layout = randomLayout();
-  render(layout, data);
-}
-
-function regenerate() {
-  if (!lastData) {
-    alert("Generate first!");
-    return;
-  }
-  applyColors();
-  const layout = randomLayout();
-  render(layout, lastData);
-}
+loadTemplate();
 
 // Export to PDF
 function downloadPDF() {
-  const element = document.getElementById("pdfContent");
-  if (!element) {
-    alert("Generate the design first!");
-    return;
-  }
-
+  const element = document.getElementById("canvas");
   const opt = {
     margin: 0.5,
     filename: "one-pager.pdf",
@@ -187,6 +216,5 @@ function downloadPDF() {
     html2canvas: { scale: 2 },
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
-
   html2pdf().set(opt).from(element).save();
 }
