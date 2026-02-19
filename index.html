@@ -2,49 +2,87 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Design AI — Choose a Template</title>
+  <title>One-Page Builder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1 style="text-align:center;">Choose a Template</h1>
+  <div class="app">
+    <!-- Left Control Panel -->
+    <div class="panel">
+      <h3>Header</h3>
+      <input type="file" id="logoInput" accept="image/*" />
+      <label><input type="checkbox" id="toggleLogo" checked /> Show Logo</label>
 
-  <div class="gallery">
-    <div class="template-card" onclick="openEditor('corporate')">
-      <h3>Corporate Classic</h3><p>Clean business one-pager</p>
+      <input id="contactInput" placeholder="Contact (phone/email)" />
+      <label><input type="checkbox" id="toggleContact" checked /> Show Contact</label>
+
+      <input id="websiteInput" placeholder="Website" />
+      <label><input type="checkbox" id="toggleWebsite" checked /> Show Website</label>
+
+      <select id="headerStyle">
+        <option value="style1">Header Style 1</option>
+        <option value="style2">Header Style 2</option>
+        <option value="style3">Header Style 3</option>
+      </select>
+
+      <hr/>
+
+      <h3>Title & Subtitle</h3>
+      <select id="titleSize">
+        <option value="large">Large</option>
+        <option value="medium">Medium</option>
+        <option value="small">Small</option>
+      </select>
+
+      <select id="titleAlign">
+        <option value="left">Left</option>
+        <option value="center">Center</option>
+      </select>
+
+      <hr/>
+
+      <h3>Colors</h3>
+      <label>Primary</label>
+      <input type="color" id="primaryColor" value="#0F2A44" />
+      <label>Background</label>
+      <input type="color" id="bgColor" value="#ffffff" />
+
+      <hr/>
+
+      <button id="downloadBtn">Download PDF (A4)</button>
     </div>
-    <div class="template-card" onclick="openEditor('split')">
-      <h3>Split Focus</h3><p>Content + Features</p>
-    </div>
-    <div class="template-card" onclick="openEditor('minimal')">
-      <h3>Minimal Clean</h3><p>Simple & airy</p>
-    </div>
-    <div class="template-card" onclick="openEditor('hero-cards')">
-      <h3>Hero + Cards</h3><p>Big hero, feature cards</p>
-    </div>
-    <div class="template-card" onclick="openEditor('editorial')">
-      <h3>Editorial</h3><p>Two-column text</p>
-    </div>
-    <div class="template-card" onclick="openEditor('grid')">
-      <h3>Grid Blocks</h3><p>Feature grid</p>
-    </div>
-    <div class="template-card" onclick="openEditor('product')">
-      <h3>Product Highlight</h3><p>Product + bullets</p>
-    </div>
-    <div class="template-card" onclick="openEditor('brief')">
-      <h3>Executive Brief</h3><p>Summary-first</p>
-    </div>
-    <div class="template-card" onclick="openEditor('dark')">
-      <h3>Dark Premium</h3><p>Bold, high contrast</p>
-    </div>
-    <div class="template-card" onclick="openEditor('startup')">
-      <h3>Startup Modern</h3><p>Big type, modern</p>
+
+    <!-- Canvas -->
+    <div class="canvas-wrap">
+      <div id="canvas" class="a4">
+        <div id="header" class="header style1">
+          <div class="header-left">
+            <img id="logo" style="display:block;" />
+          </div>
+          <div class="header-right">
+            <div id="contactText">+91 99999 99999</div>
+            <div id="websiteText">www.example.com</div>
+          </div>
+        </div>
+
+        <div class="title-block">
+          <h1 id="title" contenteditable="true">Your Main Title</h1>
+          <p id="subtitle" contenteditable="true">Your subtitle goes here</p>
+        </div>
+
+        <div class="content">
+          <p contenteditable="true">Click here and start writing your content...</p>
+        </div>
+
+        <div id="footer" class="footer" contenteditable="true">
+          Your Company Name
+        </div>
+      </div>
     </div>
   </div>
 
-  <script>
-    function openEditor(template) {
-      window.location.href = "editor.html?template=" + template;
-    }
-  </script>
+  <!-- PDF lib -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
