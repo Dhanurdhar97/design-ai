@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Design AI – One Pager Generator</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Design AI — Choose a Template</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <h1 style="text-align:center;">Choose a Template</h1>
 
-  <div class="form">
-    <h2>Paste Your Content</h2>
-    <textarea id="rawContent" placeholder="Paste your content here..."></textarea>
-
-    <div class="colors">
-      <div>
-        <label>Primary</label>
-        <input type="color" id="primaryColor" value="#0F2A44">
-      </div>
-      <div>
-        <label>Secondary</label>
-        <input type="color" id="secondaryColor" value="#1F6FD6">
-      </div>
-      <div>
-        <label>Accent</label>
-        <input type="color" id="accentColor" value="#00B3A4">
-      </div>
+  <div class="gallery">
+    <div class="template-card" onclick="openEditor('corporate')">
+      <h3>Corporate Classic</h3><p>Clean business one-pager</p>
     </div>
-
-    <button onclick="generate()">Generate</button>
-    <button onclick="regenerate()">Regenerate Layout</button>
-    <button onclick="downloadPDF()">Download PDF</button>
+    <div class="template-card" onclick="openEditor('split')">
+      <h3>Split Focus</h3><p>Content + Features</p>
+    </div>
+    <div class="template-card" onclick="openEditor('minimal')">
+      <h3>Minimal Clean</h3><p>Simple & airy</p>
+    </div>
+    <div class="template-card" onclick="openEditor('hero-cards')">
+      <h3>Hero + Cards</h3><p>Big hero, feature cards</p>
+    </div>
+    <div class="template-card" onclick="openEditor('editorial')">
+      <h3>Editorial</h3><p>Two-column text</p>
+    </div>
+    <div class="template-card" onclick="openEditor('grid')">
+      <h3>Grid Blocks</h3><p>Feature grid</p>
+    </div>
+    <div class="template-card" onclick="openEditor('product')">
+      <h3>Product Highlight</h3><p>Product + bullets</p>
+    </div>
+    <div class="template-card" onclick="openEditor('brief')">
+      <h3>Executive Brief</h3><p>Summary-first</p>
+    </div>
+    <div class="template-card" onclick="openEditor('dark')">
+      <h3>Dark Premium</h3><p>Bold, high contrast</p>
+    </div>
+    <div class="template-card" onclick="openEditor('startup')">
+      <h3>Startup Modern</h3><p>Big type, modern</p>
+    </div>
   </div>
 
-  <div id="output"></div>
-
-  <!-- PDF library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="script.js"></script>
+  <script>
+    function openEditor(template) {
+      window.location.href = "editor.html?template=" + template;
+    }
+  </script>
 </body>
 </html>
