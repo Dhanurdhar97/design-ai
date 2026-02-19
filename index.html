@@ -1,125 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Corporate One-Pager Builder</title>
+  <title>Header Only</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-  <div class="app">
-    <!-- Left Panel -->
-    <div class="panel">
-      <h3>Header</h3>
-      <input type="file" id="logoInput" accept="image/*" />
-      <label><input type="checkbox" id="toggleLogo" checked /> Show Logo</label>
 
-      <input id="contactInput" placeholder="Contact (phone/email)" />
-      <label><input type="checkbox" id="toggleContact" checked /> Show Contact</label>
+  <!-- Header -->
+  <header class="topbar">
+    <div class="container topbar-inner">
 
-      <input id="websiteInput" placeholder="Website" />
-      <label><input type="checkbox" id="toggleWebsite" checked /> Show Website</label>
-
-      <select id="headerStyle">
-        <option value="style1">Header Style 1</option>
-        <option value="style2">Header Style 2</option>
-        <option value="style3">Header Style 3</option>
-      </select>
-
-      <hr/>
-
-      <h3>Title & Subtitle</h3>
-      <select id="titleSize">
-        <option value="large">Large</option>
-        <option value="medium">Medium</option>
-        <option value="small">Small</option>
-      </select>
-
-      <select id="titleAlign">
-        <option value="left">Left</option>
-        <option value="center">Center</option>
-      </select>
-
-      <hr/>
-
-      <h3>Content Layout</h3>
-      <label>Rows</label>
-      <input type="number" id="rowsInput" min="1" max="4" value="1" />
-      <label>Columns</label>
-      <input type="number" id="colsInput" min="1" max="3" value="1" />
-      <button id="applyGridBtn">Apply Layout</button>
-
-      <hr/>
-
-      <h3>Selected Block</h3>
-      <div id="noBlockMsg">No block selected</div>
-      <div id="blockControls" style="display:none;">
-        <label>Style</label>
-        <select id="blockStyle">
-          <option value="card">Card</option>
-          <option value="section">Section</option>
-        </select>
-
-        <label>Text Size</label>
-        <select id="blockTextSize">
-          <option value="m">Medium</option>
-          <option value="s">Small</option>
-          <option value="l">Large</option>
-        </select>
-
-        <label>Background</label>
-        <input type="color" id="blockBgColor" value="#ffffff" />
-
-        <label><input type="checkbox" id="toggleBlockText" checked /> Show Text</label>
-        <label><input type="checkbox" id="toggleBlockBullets" /> Show Bullets</label>
-        <label><input type="checkbox" id="toggleBlockImage" /> Show Image</label>
-
-        <input type="file" id="blockImageInput" accept="image/*" />
+      <!-- Logo (replace logo.png with your logo) -->
+      <div class="logo">
+        <img src="logo.png" alt="Your Company Logo">
       </div>
 
-      <hr/>
-
-      <h3>Colors</h3>
-      <label>Primary</label>
-      <input type="color" id="primaryColor" value="#0F2A44" />
-      <label>Page Background</label>
-      <input type="color" id="bgColor" value="#ffffff" />
-
-      <hr/>
-
-      <button id="downloadBtn">Download PDF (A4)</button>
-    </div>
-
-    <!-- Canvas -->
-    <div class="canvas-wrap">
-      <div id="canvas" class="a4">
-        <div id="header" class="header style1">
-          <div class="header-left">
-            <img id="logo" />
-          </div>
-          <div class="header-right">
-            <div id="contactText">+91 99999 99999</div>
-            <div id="websiteText">www.example.com</div>
-          </div>
-        </div>
-
-        <div class="title-block">
-          <h1 id="title" contenteditable="true">Your Main Title</h1>
-          <p id="subtitle" contenteditable="true">Your subtitle goes here</p>
-        </div>
-
-        <div class="content">
-          <div id="grid" class="grid"></div>
-        </div>
-
-        <div id="footer" class="footer" contenteditable="true">
-          Your Company Name
-        </div>
+      <!-- Contact Info (all text is editable) -->
+      <div class="contact-info">
+        <div class="item">📧 <span>sales@yourcompany.com</span></div>
+        <div class="item">📞 <span>+91-XXXXXXXXXX</span></div>
+        <div class="item">🌐 <span>www.yourcompany.com</span></div>
       </div>
-    </div>
-  </div>
 
-  <!-- PDF lib -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="script.js"></script>
+    </div>
+  </header>
+
 </body>
 </html>
