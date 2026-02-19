@@ -1,0 +1,94 @@
+:root {
+  --primary: #0F2A44;
+  --secondary: #1F6FD6;
+  --accent: #00B3A4;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+  padding: 20px;
+}
+
+.form {
+  background: white;
+  padding: 20px;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.form textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.colors {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 14px;
+  margin-right: 10px;
+}
+
+.page {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  margin-top: 20px;
+}
+
+/* Common */
+.header {
+  color: white;
+  padding: 40px 30px;
+}
+.section {
+  padding: 20px 30px;
+}
+.footer {
+  color: white;
+  text-align: center;
+  padding: 14px;
+}
+
+/* Layout A */
+.layout-a .header { background: var(--primary); }
+.layout-a .footer { background: var(--primary); }
+.layout-a .features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.layout-a .box {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+/* Layout B (Split) */
+.layout-b .header { background: var(--secondary); }
+.layout-b .footer { background: var(--secondary); }
+.layout-b .content {
+  display: flex;
+}
+.layout-b .content > div {
+  flex: 1;
+  padding: 20px;
+}
+.layout-b .left { background: #f5f7fa; }
+.layout-b .right { background: var(--accent); color: white; }
+
+/* Layout C (Minimal) */
+.layout-c .header {
+  border-bottom: 4px solid var(--primary);
+  color: black;
+}
+.layout-c .footer {
+  border-top: 4px solid var(--primary);
+  color: black;
+}
