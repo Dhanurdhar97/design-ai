@@ -60,12 +60,12 @@ function render(layout, data) {
           <h1>${title}</h1>
           <p>${subtitle}</p>
         </div>
-        <div class="section">
+        <div class="section content">
           <h3>Overview</h3>
           <p>${overview}</p>
-        </div>
-        <div class="section features">
-          ${featuresHtml}
+          <div class="features">
+            ${featuresHtml}
+          </div>
         </div>
         <div class="footer">nFolks Data Solutions LLC</div>
       </div>
@@ -79,15 +79,11 @@ function render(layout, data) {
           <h1>${title}</h1>
           <p>${subtitle}</p>
         </div>
-        <div class="content">
-          <div class="left">
-            <h3>Overview</h3>
-            <p>${overview}</p>
-          </div>
-          <div class="right">
-            <h3>Features</h3>
-            ${featuresHtml}
-          </div>
+        <div class="section content">
+          ${overview}
+        </div>
+        <div class="section features">
+          ${featuresHtml}
         </div>
         <div class="footer">nFolks Data Solutions LLC</div>
       </div>
@@ -101,9 +97,13 @@ function render(layout, data) {
           <h1>${title}</h1>
           <p>${subtitle}</p>
         </div>
-        <div class="section">
-          <p>${overview}</p>
-          <div class="features">
+        <div class="split">
+          <div class="left">
+            <h3>Overview</h3>
+            <p>${overview}</p>
+          </div>
+          <div class="right">
+            <h3>Features</h3>
             ${featuresHtml}
           </div>
         </div>
