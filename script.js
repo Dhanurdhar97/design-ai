@@ -1,3 +1,4 @@
+// ===== Header & Title Controls (same as Phase 1) =====
 const logoInput = document.getElementById("logoInput");
 const logoImg = document.getElementById("logo");
 
@@ -71,7 +72,157 @@ bgColor.addEventListener("input", () => {
   document.getElementById("canvas").style.background = bgColor.value;
 });
 
-// PDF Export (A4, 1 page)
+// ===== Grid & Blocks =====
+const rowsInput = document.getElementById("rowsInput");
+const colsInput = document.getElementById("colsInput");
+const applyGridBtn = document.getElementById("applyGridBtn");
+const grid = document.getElementById("grid");
+
+// Block controls
+const noBlockMsg = document.getElementById("noBlockMsg");
+const blockControls = document.getElementById("blockControls");
+const blockStyleSel = document.getElementById("blockStyle");
+const blockTextSizeSel = document.getElementById("blockTextSize");
+const blockBgColor = document.getElementById("blockBgColor");
+const toggleBlockText = document.getElementById("toggleBlockText");
+const toggleBlockBullets = document.getElementById("toggleBlockBullets");
+const toggleBlockImage = document.getElementById("toggleBlockImage");
+const blockImageInput = document.getElementById("blockImageInput");
+
+let selectedBlock = null;
+
+applyGridBtn.addEventListener("click", () => {
+  const rows = parseInt(rowsInput.value, 10);
+  const cols = parseInt(colsInput.value, 10);
+
+  grid.innerHTML = "";
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+  const total = rows * cols;
+  for (let i = 0; i < total; i++) {
+    const block = document.createElement("div");
+    block.className = "block card text-m";
+
+    const text = document.createElement("div");
+    text.className = "block-text";
+    text.contentEditable = "true";
+    text.innerText = "Click to edit text...";
+
+    const ul = document.createElement("ul");
+    ul.className = "block-bullets";
+    ul.style.display = "none";
+    ul.innerHTML = "<li contenteditable='true'>Bullet 1</li><li contenteditable='true'>Bullet 2</li>";
+
+    const img = document.createElement("img");
+    img.className = "block-image";
+    img.style.display = "none";
+
+    block.appendChild(text);
+    block.appendChild(ul);
+    block.appendChild(img);
+
+    block.addEventListener("click", (e) => {
+      e.stopPropagation();
+      selectBlock(block);
+    });
+
+    grid.appendChild(block);
+  }
+
+  deselectBlock();
+});
+
+function selectBlock(block) {
+  document.querySelectorAll(".block").forEach(b => b.classList.remove("selected"));
+  block.classList.add("selected");
+  selectedBlock = block;
+
+  noBlockMsg.style.display = "none";
+  blockControls.style.display = "block";
+
+  // Sync controls
+  blockStyleSel.value = block.classList.contains("section") ? "section" : "card";
+  blockTextSizeSel.value = block.classList.contains("text-s") ? "s" : block.classList.contains("text-l") ? "l" : "m";
+  blockBgColor.value = rgbToHex(block.style.backgroundColor || "#ffffff");
+
+  const textEl = block.querySelector(".block-text");
+  const bulletsEl = block.querySelector(".block-bullets");
+  const imgEl = block.querySelector(".block-image");
+
+  toggleBlockText.checked = textEl.style.display !== "none";
+  toggleBlockBullets.checked = bulletsEl.style.display !== "none";
+  toggleBlockImage.checked = imgEl.style.display !== "none";
+}
+
+function deselectBlock() {
+  selectedBlock = null;
+  document.querySelectorAll(".block").forEach(b => b.classList.remove("selected"));
+  noBlockMsg.style.display = "block";
+  blockControls.style.display = "none";
+}
+
+document.body.addEventListener("click", (e) => {
+  if (!e.target.closest(".block")) {
+    deselectBlock();
+  }
+});
+
+// Block controls events
+blockStyleSel.addEventListener("change", () => {
+  if (!selectedBlock) return;
+  selectedBlock.classList.remove("card", "section");
+  selectedBlock.classList.add(blockStyleSel.value);
+});
+
+blockTextSizeSel.addEventListener("change", () => {
+  if (!selectedBlock) return;
+  selectedBlock.classList.remove("text-s", "text-m", "text-l");
+  selectedBlock.classList.add("text-" + blockTextSizeSel.value);
+});
+
+blockBgColor.addEventListener("input", () => {
+  if (!selectedBlock) return;
+  selectedBlock.style.background = blockBgColor.value;
+});
+
+toggleBlockText.addEventListener("change", () => {
+  if (!selectedBlock) return;
+  selectedBlock.querySelector(".block-text").style.display = toggleBlockText.checked ? "block" : "none";
+});
+
+toggleBlockBullets.addEventListener("change", () => {
+  if (!selectedBlock) return;
+  selectedBlock.querySelector(".block-bullets").style.display = toggleBlockBullets.checked ? "block" : "none";
+});
+
+toggleBlockImage.addEventListener("change", () => {
+  if (!selectedBlock) return;
+  selectedBlock.querySelector(".block-image").style.display = toggleBlockImage.checked ? "block" : "none";
+});
+
+blockImageInput.addEventListener("change", (e) => {
+  if (!selectedBlock) return;
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const imgEl = selectedBlock.querySelector(".block-image");
+    imgEl.src = reader.result;
+    imgEl.style.display = "block";
+    toggleBlockImage.checked = true;
+  };
+  reader.readAsDataURL(file);
+});
+
+// Helper
+function rgbToHex(rgb) {
+  if (!rgb || rgb === "transparent") return "#ffffff";
+  const res = rgb.match(/\d+/g);
+  if (!res) return "#ffffff";
+  return "#" + res.slice(0,3).map(x => (+x).toString(16).padStart(2,"0")).join("");
+}
+
+// ===== PDF Export (A4, 1 page) =====
 downloadBtn.addEventListener("click", () => {
   const element = document.getElementById("canvas");
   const opt = {
