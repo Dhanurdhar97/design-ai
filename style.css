@@ -1,131 +1,103 @@
 :root {
   --primary: #0F2A44;
-  --secondary: #1F6FD6;
-  --accent: #00B3A4;
 }
 
 * { box-sizing: border-box; }
 
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
   background: #eef2f7;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* Left Panel */
+.panel {
+  width: 280px;
+  background: #ffffff;
+  padding: 12px;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+}
+
+.panel h3 { margin-top: 12px; }
+.panel input, .panel select, .panel button {
+  width: 100%;
+  margin: 6px 0;
+  padding: 6px;
+}
+
+/* Canvas Area */
+.canvas-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* A4 Page */
+.a4 {
+  width: 794px;   /* ~ A4 at 96 DPI */
+  height: 1123px;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,.15);
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: var(--primary);
+  color: #fff;
+}
+
+.header img {
+  max-height: 50px;
+}
+
+.header.style2 {
+  justify-content: center;
+  text-align: center;
+}
+
+.header.style3 {
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Title block */
+.title-block {
   padding: 20px;
 }
 
-/* ===== Gallery ===== */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  max-width: 1100px;
-  margin: 40px auto;
+#title.large { font-size: 40px; }
+#title.medium { font-size: 32px; }
+#title.small { font-size: 24px; }
+
+.left { text-align: left; }
+.center { text-align: center; }
+
+/* Content */
+.content {
+  padding: 20px;
 }
 
-.template-card {
-  background: white;
-  padding: 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.template-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-}
-
-/* ===== Editor ===== */
-.toolbar {
-  background: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.canvas {
-  max-width: 900px;
-  margin: auto;
-  background: white;
-  padding: 0;
-}
-
-/* Editable text */
-[contenteditable="true"] {
-  outline: 1px dashed #cfd6df;
-  padding: 4px;
-}
-
-/* Common blocks */
-.header { padding: 36px 28px; }
-.section { padding: 28px; }
-.footer { padding: 14px; text-align: center; }
-
-/* ===== Template Skins ===== */
-
-/* 1) Corporate */
-.corporate .header, .corporate .footer { background: var(--primary); color: #fff; }
-.corporate .features { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-.box { border:1px solid #d6dbe3; padding:12px; border-radius:6px; }
-
-/* 2) Split */
-.split .header, .split .footer { background: var(--secondary); color:#fff; }
-.split .content { display:grid; grid-template-columns: 2fr 1fr; gap:20px; }
-
-/* 3) Minimal */
-.minimal .header { border-bottom:4px solid var(--primary); }
-.minimal .footer { border-top:4px solid var(--primary); }
-
-/* 4) Hero + Cards */
-.hero-cards .hero { background: linear-gradient(135deg, var(--primary), var(--secondary)); color:#fff; padding:48px 32px; }
-.hero-cards .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-
-/* 5) Editorial */
-.editorial .columns { column-count:2; column-gap:36px; }
-
-/* 6) Grid */
-.grid .grid-wrap { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-
-/* 7) Product */
-.product .product-wrap { display:grid; grid-template-columns:1.2fr .8fr; gap:20px; }
-
-/* 8) Brief */
-.brief .summary { background:#f5f7fb; border-left:4px solid var(--accent); padding:20px; }
-
-/* 9) Dark */
-.dark { background:#0e1320; color:#e9ecf1; }
-.dark .header, .dark .footer { background:#0b0f1a; }
-.dark .box { border-color:#2a3350; }
-
-/* 10) Startup */
-.startup .header { background: var(--accent); color:#001015; }
-.startup h1 { font-size: 42px; }
-.startup .callouts { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-.content-panel {
-  background: white;
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 12px;
-  margin-bottom: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  text-align: center;
+  background: var(--primary);
+  color: #fff;
 }
-
-.content-panel textarea {
-  grid-column: 1 / -1;
-  min-height: 80px;
-  padding: 8px;
-}
-
-.content-panel input {
-  padding: 8px;
-}
-
-.content-panel button {
-  grid-column: 1 / -1;
-  padding: 10px;
-  cursor: pointer;
-}
-
-
