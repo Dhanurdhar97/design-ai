@@ -30,9 +30,7 @@ logoInput.addEventListener("change", e => {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = () => {
-    logoImg.src = reader.result;
-  };
+  reader.onload = () => { logoImg.src = reader.result; };
   reader.readAsDataURL(file);
 });
 
@@ -48,19 +46,15 @@ toggleWebsite.addEventListener("change", () => {
 });
 
 // Text inputs
-contactInput.addEventListener("input", () => {
-  contactText.innerText = contactInput.value;
-});
-websiteInput.addEventListener("input", () => {
-  websiteText.innerText = websiteInput.value;
-});
+contactInput.addEventListener("input", () => { contactText.innerText = contactInput.value; });
+websiteInput.addEventListener("input", () => { websiteText.innerText = websiteInput.value; });
 
 // Header style
 headerStyle.addEventListener("change", () => {
   header.className = "header " + headerStyle.value;
 });
 
-// Title size & align
+// Title size & alignment
 function updateTitleStyle() {
   title.className = titleSize.value + " " + titleAlign.value;
   subtitle.className = titleAlign.value;
