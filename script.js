@@ -218,3 +218,35 @@ function downloadPDF() {
   };
   html2pdf().set(opt).from(element).save();
 }
+function applyContent() {
+  const title = document.getElementById("inpTitle").value || "Your Title";
+  const subtitle = document.getElementById("inpSubtitle").value || "Your subtitle";
+  const overview = document.getElementById("inpOverview").value || "Paste your overview here...";
+  const featuresRaw = document.getElementById("inpFeatures").value || "";
+  const footer = document.getElementById("inpFooter").value || "Your Company";
+
+  const features = featuresRaw.split("\n").map(s => s.trim()).filter(Boolean);
+
+  // Fill common fields
+  const h1 = document.querySelector("#canvas h1");
+  if (h1) h1.innerText = title;
+
+  const pSub = document.querySelector("#canvas .header p");
+  if (pSub) pSub.innerText = subtitle;
+
+  // Try to fill first paragraph we find
+  const firstPara = document.querySelector("#canvas p[contenteditable='true']");
+  if (firstPara) firstPara.innerText = overview;
+
+  // Fill boxes or list items as features
+  const boxes = document.querySelectorAll("#canvas .box, #canvas li");
+  if (boxes.length && features.length) {
+    boxes.forEach((el, i) => {
+      if (features[i]) el.innerText = features[i];
+    });
+  }
+
+  const foot = document.querySelector("#canvas .footer");
+  if (foot) foot.innerText = footer;
+}
+
