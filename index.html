@@ -2,12 +2,12 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>One-Page Builder</title>
+  <title>Corporate One-Pager Builder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app">
-    <!-- Left Control Panel -->
+    <!-- Left Panel -->
     <div class="panel">
       <h3>Header</h3>
       <input type="file" id="logoInput" accept="image/*" />
@@ -44,7 +44,7 @@
       <h3>Colors</h3>
       <label>Primary</label>
       <input type="color" id="primaryColor" value="#0F2A44" />
-      <label>Background</label>
+      <label>Page Background</label>
       <input type="color" id="bgColor" value="#ffffff" />
 
       <hr/>
@@ -57,7 +57,7 @@
       <div id="canvas" class="a4">
         <div id="header" class="header style1">
           <div class="header-left">
-            <img id="logo" style="display:block;" />
+            <img id="logo" />
           </div>
           <div class="header-right">
             <div id="contactText">+91 99999 99999</div>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="content">
-          <p contenteditable="true">Click here and start writing your content...</p>
+          <p contenteditable="true">Click here and start writing your content…</p>
         </div>
 
         <div id="footer" class="footer" contenteditable="true">
