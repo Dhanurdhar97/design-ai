@@ -20,7 +20,7 @@ body {
 
 .form textarea {
   width: 100%;
-  height: 160px;
+  height: 180px;
   padding: 10px;
   margin-bottom: 10px;
 }
@@ -38,9 +38,10 @@ button {
 }
 
 .page {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
   background: white;
+  line-height: 1.6;
 }
 
 /* Common */
@@ -49,7 +50,7 @@ button {
 }
 
 .section {
-  padding: 20px 30px;
+  padding: 30px;
 }
 
 .footer {
@@ -57,7 +58,7 @@ button {
   padding: 14px;
 }
 
-/* Layout A – Corporate */
+/* ===== Layout A: Corporate ===== */
 .layout-a .header {
   background: var(--primary);
   color: white;
@@ -66,17 +67,25 @@ button {
   background: var(--primary);
   color: white;
 }
+
+.layout-a .content {
+  max-width: 800px;
+  margin: auto;
+}
+
 .layout-a .features {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 12px;
+  margin-top: 20px;
 }
+
 .layout-a .box {
   border: 1px solid #ccc;
   padding: 15px;
 }
 
-/* Layout B – Split */
+/* ===== Layout B: Editorial (2-column text) ===== */
 .layout-b .header {
   background: var(--secondary);
   color: white;
@@ -85,37 +94,49 @@ button {
   background: var(--secondary);
   color: white;
 }
+
 .layout-b .content {
-  display: flex;
+  max-width: 1000px;
+  margin: auto;
+  column-count: 2;
+  column-gap: 40px;
 }
-.layout-b .left {
-  flex: 1;
-  padding: 20px;
-  background: #f5f7fa;
+
+.layout-b .features {
+  max-width: 1000px;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
-.layout-b .right {
-  flex: 1;
-  padding: 20px;
+
+/* ===== Layout C: Split Panel ===== */
+.layout-c .header {
   background: var(--accent);
   color: white;
 }
-.layout-b .box {
-  margin-bottom: 10px;
+.layout-c .footer {
+  background: var(--accent);
+  color: white;
 }
 
-/* Layout C – Minimal */
-.layout-c .header {
-  border-bottom: 4px solid var(--primary);
-}
-.layout-c .footer {
-  border-top: 4px solid var(--primary);
-}
-.layout-c .features {
+.layout-c .split {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
 }
+
+.layout-c .left {
+  padding: 30px;
+}
+
+.layout-c .right {
+  padding: 30px;
+  background: #f5f7fa;
+}
+
 .layout-c .box {
   border: 1px solid #ccc;
-  padding: 15px;
+  padding: 12px;
+  margin-bottom: 10px;
 }
