@@ -103,3 +103,29 @@ body {
 .startup .header { background: var(--accent); color:#001015; }
 .startup h1 { font-size: 42px; }
 .startup .callouts { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.content-panel {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.content-panel textarea {
+  grid-column: 1 / -1;
+  min-height: 80px;
+  padding: 8px;
+}
+
+.content-panel input {
+  padding: 8px;
+}
+
+.content-panel button {
+  grid-column: 1 / -1;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
